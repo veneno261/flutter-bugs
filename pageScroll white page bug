@@ -1,0 +1,109 @@
+///when use BouncingScrollPhysics as pageView physic and use a growable list as children
+///and set add new page on button 
+
+import 'package:flutter/material.dart';
+
+class SubmitAdvertise extends StatefulWidget {
+  @override
+  _SubmitAdvertiseState createState() => _SubmitAdvertiseState();
+}
+
+class _SubmitAdvertiseState extends State<SubmitAdvertise> {
+
+  List<Widget> pages = [];
+  PageController pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    pages.add(PageOne(pages, pageController));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: PageView(
+        physics: BouncingScrollPhysics(),
+        children: pages,
+        controller: pageController,
+      ),
+    );
+  }
+}
+
+
+class PageOne extends StatelessWidget {
+
+  final List<Widget> pages;
+  final PageController pageController;
+  PageOne(this.pages, this.pageController);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: IconButton(icon: Icon(Icons.pages), onPressed: (){
+          pages.add(PageTwo(pages, pageController));
+          pageController.nextPage(duration: Duration(milliseconds: 300), curve: SawTooth(1));
+        }),
+      ),
+    );
+  }
+}
+
+class PageTwo extends StatelessWidget {
+
+  final List<Widget> pages;
+  final PageController pageController;
+  PageTwo(this.pages, this.pageController);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: IconButton(icon: Icon(Icons.add_shopping_cart), onPressed: (){
+          pages.add(PageThree(pages, pageController));
+          pageController.nextPage(duration: Duration(milliseconds: 300), curve: SawTooth(1));
+        }),
+      ),
+    );
+  }
+}
+
+class PageThree extends StatelessWidget {
+
+  final List<Widget> pages;
+  final PageController pageController;
+  PageThree(this.pages, this.pageController);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: IconButton(icon: Icon(Icons.stars), onPressed: (){
+          pages.add(PageFour(pages));
+          pageController.nextPage(duration: Duration(milliseconds: 300), curve: SawTooth(1));
+        }),
+      ),
+    );
+  }
+}
+
+class PageFour extends StatelessWidget {
+
+  final List<Widget> pages;
+  PageFour(this.pages);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: IconButton(icon: Icon(Icons.opacity), onPressed: (){
+        }),
+      ),
+    );
+  }
+}
+
+
